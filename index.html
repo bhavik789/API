@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!--
+      Need a visual blank slate?
+      Remove all code in `styles.css`!
+    -->
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body></body>
+
+<script>
+    // main conatiner
+
+    var container = $('<div/>').addClass('pt-10 text-md font-serif');
+
+    // form
+    var form = $('<form/>').addClass('w-64 lg:w-1/4 text-white text-lg p-5 pt-0 mx-auto border rounded-xl');
+
+    // form title      id = title
+    var title = $('<div/>').addClass('flex text-xl justify-center');
+    $('<label/>')
+        .text('Employee Form')
+        .attr({ for: 'title', id: 'title' })
+        .appendTo(title);
+
+    // name   id = name
+
+    var fname = $('<div/>').addClass('');
+    $('<label/>')
+        .attr({ for: 'name' })
+        .append('Name : ')
+        .appendTo(fname)
+        .after(
+            $('<input/>')
+                .attr({
+                    type: 'text',
+                    placeholder: '  Please Enter Your Name',
+                    for: 'name',
+                    id: 'name',
+                })
+                .addClass('w-full border-b-2 text-black border-black rounded-lg')
+        );
+
+    // email id = email
+
+    var email = $('<div/>').addClass('');
+
+    $('<label/>')
+        .attr({ for: 'email' })
+        .append('Email : ')
+        .appendTo(email)
+        .after(
+            $('<input/>')
+                .attr({
+                    type: 'email',
+                    placeholder: '  Please Enter Your Email',
+                    for: 'email',
+                    id: 'email',
+                })
+                .addClass('w-full border-b-2 text-black border-black rounded-lg')
+                .appendTo(email)
+        );
+
+    // gender   id = male / female
+
+    var gender = $('<div/>').addClass('');
+
+    $('<label/>').append('Gender : ').attr({ for: 'gender' }).appendTo(gender);
+
+    var genderopt = $('<div/>')
+        .addClass('flex justify-evenly')
+        .appendTo(gender);
+
+    // male Radio
+
+    $('<label/>')
+        .append('Male')
+        .attr({ for: 'male' })
+        .appendTo(genderopt)
+        .after(
+            $('<input/>')
+                .attr({
+                    type: 'radio',
+                    value: 'male',
+                    name: 'gender',
+                    id: 'male'
+                })
+                .appendTo(genderopt)
+        );
+
+    // female Radio
+
+    $('<label/>')
+        .append('Female')
+        .attr({ for: 'female' })
+        .appendTo(genderopt)
+        .after(
+            $('<input/>')
+                .attr({
+                    type: 'radio',
+                    value: 'female',
+                    name: 'gender',
+                    id: 'female'
+                })
+                .appendTo(genderopt)
+        );
+
+    // Status   id = active / inactive
+
+    var statuss = $('<div/>').addClass('');
+
+    $('<label/>').append('Status : ').attr({ for: 'status' }).appendTo(statuss);
+
+    var statusopt = $('<div/>')
+        .addClass('flex justify-evenly')
+        .appendTo(statuss);
+
+    // Active Radio
+
+    $('<label/>')
+        .append('Active')
+        .attr({ for: 'active' })
+        .appendTo(statusopt)
+        .after(
+            $('<input/>')
+                .attr({
+                    type: 'radio',
+                    name: 'status',
+                    value: 'active',
+                    id: 'active',
+                })
+                .appendTo(statusopt)
+        );
+
+    // inactive Radio
+
+    $('<label/>')
+        .append('Inactive')
+        .attr({ for: 'inactive' })
+        .appendTo(statusopt)
+        .after(
+            $('<input/>')
+                .attr({
+                    type: 'radio',
+                    name: 'status',
+                    value: 'inactive',
+                    id: 'inactive',
+                })
+                .appendTo(statusopt)
+        );
+
+    // Get Post Buttons
+
+    var buttons = $('<div/>').addClass('flex justify-evenly gap-1 mt-2');
+
+    $('<input/>')
+        .attr({ type: 'button', value: 'Get Data', id: 'getd' })
+        .appendTo(buttons)
+        .addClass('cursor-pointer bg-green-500 p-2 py-1 rounded-xl');
+
+    $('<input/>')
+        .attr({ type: 'button', value: 'Post Data', id: 'postd' })
+        .appendTo(buttons)
+        .addClass('cursor-pointer bg-blue-500 p-2 py-1 rounded-xl');
+
+    // Update button
+    var update = $('<div/>').addClass('flex mt-2');
+
+    $('<input/>')
+        .attr({ type: 'button', value: 'Update Data', id: 'updated' })
+        .appendTo(update)
+        .addClass(' cursor-pointer mx-auto bg-sky-500 p-2 py-1 rounded-xl');
+
+    // appending everythng
+    form.append(title, fname, email, gender, statuss, buttons, update);
+    form.appendTo(container);
+    container.appendTo('body');
+
+    $('body')
+        .addClass(
+            "bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRxDITW9k0p4Ogq-AplRd8C-yiL4zUd0ddNqnTujCBdbba0U1ANRe2Kp3MYsaOuBNIFh8&usqp=CAU')] "
+        )
+
+
+    // Div container for card
+    var cardcontainer = $('<div/>').addClass('flex justify-evenly flex-wrap')
+    cardcontainer.appendTo('body')
+
+    // Function to get data from API
+    function getdata() {
+        var settings = {
+            url: 'https://gorest.co.in/public/v2/users',
+            method: 'GET',
+            timeout: 0,
+            headers: {
+                Authorization:
+                    'Bearer d98f96fe3b900026af28b35819f46cf61697323be24517a40c56c1ed9a222a96',
+            },
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            printdata(response)
+        });
+    }
+
+    //Function to Print the data in Card Format
+    function printdata(data) {
+
+        cardcontainer.html('')
+
+        $('<div/>').append('API Data').addClass('flex text-3xl justify-center text-white mt-5').appendTo(container)
+
+        for (var d of data) {
+
+            var link, accent, color, bgcolor;
+
+            if (d.gender === 'female') {
+                link =// link of image
+                    'https://th.bing.com/th/id/OIP.nAY1RmMdynwlIxthpQ2FMQHaEo?w=291&h=181&c=7&r=0&o=5&pid=1.7';
+                accent = 'Ms. ';
+            }
+
+            else if (d.gender === 'male') {
+                link =// link of image
+                    'https://th.bing.com/th/id/OIP.NSxONYhZ6QodogauCLQ2ewHaKg?pid=ImgDet&w=171&h=242&c=7';
+                accent = 'Mr. ';
+            }
+
+            if (d.status === 'active') {
+                color = ['text-green-600', 'bg-green-500'];
+            }
+
+            else if (d.status === 'inactive') {
+                color = ['text-red-500', 'bg-red-500'];
+            }
+
+            var circle = $('<h1/>').addClass(
+                `w-4 p-2 rounded-full ${color[1]} border-2 border-black`
+            );
+
+            var imagediv = $('<div/>').addClass(
+                'w-20 h-20 mx-auto overflow-hidden rounded-full'
+            );
+
+            var imag = $('<img/>')
+                .attr('src', `${link}`)
+                .addClass(
+                    'w-20 h-20 object-cover hover:scale-125 duration-500 mx-auto rounded-full'
+                )
+                .appendTo(imagediv);
+
+            var id = $('<h2/>')
+                .addClass('text-center')
+                .text('Id : ' + d.id);
+
+            var name = $('<h3/>')
+                .addClass('text-center font-bold text-lg')
+                .text(accent + d.name);
+
+            var email = $('<h4/>')
+                .text('Email : ' + d.email)
+                .addClass('flex flex-wrap');
+
+            var status = $('<h6/>').text('Status : ');
+
+            var spa = $('<span/>')
+                .addClass(`font-bold ${color[0]}`)
+                .text(d.status)
+                .appendTo(status);
+
+            var gender = $('<h5/>').text('Gender : ' + d.gender);
+
+            var buttondiv = $('<div/>').addClass('flex justify-evenly');
+
+            var updatebtn = $('<button/>')
+                .text('UPDATE')
+                .attr({ id: 'put', onclick: `putdata(${d.id})` })
+                .addClass('bg-yellow-300 p-2 rounded-xl hover:scale-105')
+                .appendTo(buttondiv);
+
+            var deletebtn = $('<button/>')
+                .text('DELETE')
+                .attr({ id: 'delete', onclick: `deletedata(${d.id})` })
+                .addClass('bg-red-600 p-2 rounded-xl hover:scale-105')
+                .appendTo(buttondiv);
+
+            card = $('<div/>') // contaier div
+                .addClass(
+                    "bg-[url('https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252__340.jpg')] bg-no-repeat h-full w-full m-1 rounded-xl p-1 lg:w-72 md:w-66 sm:w-60 text-balance hover:scale-105 shadow-xl hover:shadow-2xl"
+                )
+
+            card.append(circle, imagediv, id, name, email, gender, status, buttondiv).appendTo(cardcontainer)
+        }
+
+    }
+
+    //Function to Post the data Send data to API
+    function postdata() {
+
+        var a = $('#name').val()
+        var b = $('#email').val()
+        var c = $('input[name=gender]:checked').val()
+        var d = $('input[name=status]:checked').val()
+
+        var settings = {
+            url: "https://gorest.co.in/public/v2/users",
+            method: "POST",
+            timeout: 0,
+            headers: {
+                Authorization: "Bearer d98f96fe3b900026af28b35819f46cf61697323be24517a40c56c1ed9a222a96",
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify({
+                name: $('#name').val(),
+                email: $('#email').val(),
+                gender: $('input[name=gender]:checked').val(),
+                status: $('input[name=status]:checked').val()
+            }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            alert("Data Successfully Added!")
+        });
+
+        getdata();
+
+        cleardata();
+    }
+
+    //Function to Clear the Form
+    function cleardata() {
+        $('#name').val('')
+        $('#email').val('')
+        $('input[type=radio]').prop('checked', false)
+    }
+
+    //Function to Fetch Single data to fill Form
+    function putdata(id) {
+        $('#title').val(id)
+
+        var settings = {
+            url: 'https://gorest.co.in/public/v2/users/' + id,
+            method: 'GET',
+            timeout: 0,
+            headers: {
+                Authorization:
+                    'Bearer d98f96fe3b900026af28b35819f46cf61697323be24517a40c56c1ed9a222a96',
+            },
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            fillform(response)
+        });
+    }
+
+    //Function to Fill the Form using Single Card data 
+    function fillform(data) {
+        $('#name').val(data.name)
+        $('#email').val(data.email)
+        console.log(data.gender);
+
+        if (data.gender == 'male') {
+            $('input[id=male]').prop('checked', true)
+        }
+        else {
+            $('input[id=female]').prop('checked', true)
+        }
+
+        if (data.status == 'active') {
+            $('input[id=active]').prop('checked', true)
+        }
+        else {
+            $('input[id=inactive]').prop('checked', true)
+        }
+    }
+
+    //Function to Update the Fetched Data from Card
+    function patchdata(id) {
+
+        var settings = {
+            url: "https://gorest.co.in/public/v2/users/" + id,
+            method: "PATCH",
+            timeout: 0,
+            headers: {
+                Authorization: "Bearer d98f96fe3b900026af28b35819f46cf61697323be24517a40c56c1ed9a222a96",
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify({
+                id: id,
+                name: $('#name').val(),
+                email: $('#email').val(),
+                gender: $('input[name=gender]:checked').val(),
+                status: $('input[name=status]:checked').val()
+            }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            alert("Data Successfully Updated!")
+        });
+
+        getdata()
+
+        cleardata()
+    }
+
+    //Function to Delete a Specific Data
+    function deletedata(id) {
+        var settings = {
+            url: "https://gorest.co.in/public/v2/users/" + id,
+            method: "DELETE",
+            timeout: 0,
+            headers: {
+                Authorization: "Bearer d98f96fe3b900026af28b35819f46cf61697323be24517a40c56c1ed9a222a96",
+                "Content-Type": "application/json"
+            },
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            alert("Data Successfully Deleted!")
+        });
+
+        getdata()
+    }
+
+    $('#getd').click(function () {
+        getdata();
+    });
+
+    $('#postd').click(function () {
+        postdata();
+    })
+
+    $('#updated').click(function () {
+        patchdata($('#title').val());
+    })
+</script>
+
+</html>
